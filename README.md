@@ -19,7 +19,7 @@ Via `.babelrc` or `babel-loader`.
   "plugins": [
     [
       "babel-plugin-transform-remove-imports", {
-        "test": "/(less|css)$/"
+        "test": "(less|css)$"
       }
     ]
   ]
