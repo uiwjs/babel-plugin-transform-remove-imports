@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-transform-remove-imports",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Remove the specified import declaration when you use the babel transform to build the package.",
   "repository": "https://github.com/jaywcjlove/babel-plugin-transform-remove-imports",
   "main": "lib/index.js",
