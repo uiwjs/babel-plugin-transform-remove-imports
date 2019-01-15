@@ -46,3 +46,26 @@ Output Result
 import { Button } from 'uiw';
 import { Select } from '@uiw/core';
 ```
+
+## Programatic Usage
+
+```js
+import plugin from 'babel-plugin-transform-rename-import'
+import { transform } from 'babel-core'
+ 
+function replace (code) {
+  return transform(code, {
+    babelrc: false,
+    plugins: [
+      [plugin, { test: "(less|css)$" }]
+    ],
+  }).code;
+}
+ 
+replace("import './index.main.less';import { Button } from 'uiw';")
+//=> "import { Button } from 'uiw';"
+```
+
+## License
+
+MIT © [`Kenny Wong`](https://github.com/jaywcjlove)
