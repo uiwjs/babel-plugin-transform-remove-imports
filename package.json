@@ -1,10 +1,11 @@
 {
   "name": "babel-plugin-transform-remove-imports",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Remove the specified import declaration when you use the babel transform to build the package.",
   "repository": "https://github.com/uiwjs/babel-plugin-transform-remove-imports",
   "main": "lib/index.js",
   "scripts": {
+    "prepare": "npm run build",
     "test": "jest --coverage",
     "test:watch": "jest --watchAll --coverage",
     "build": "babel src --out-dir lib",
@@ -39,6 +40,10 @@
     "babel-core": "^7.0.0-bridge.0",
     "jest": "^23.6.0"
   },
+  "files": [
+    "lib",
+    "index.d.ts"
+  ],
   "author": "Kenny Wong",
   "license": "MIT"
 }
