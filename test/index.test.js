@@ -20,6 +20,11 @@ fixtures.map((caseName) => {
       pluginBaseOpts.plugins = [
         [plugin, { test: "(less|css)$" }]
       ]
+    } else if (caseName === 'remove-all') {
+      pluginBaseOpts.presets = [["@babel/preset-env", { "modules": false }]];
+      pluginBaseOpts.plugins = [
+        [plugin, { removeAll: true }]
+      ]
     } else {
       pluginBaseOpts.presets = [["@babel/preset-env", { "modules": false }]];
     }
