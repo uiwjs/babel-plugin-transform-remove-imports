@@ -47,10 +47,15 @@ import { Button } from 'uiw';
 import { Select } from '@uiw/core';
 ```
 
+## Optiosn
+
+- `test: string` Matches based on regular expressions.
+- `removeAll: boolean` Delete all import packages.
+
 ## Programatic Usage
 
 ```js
-import plugin from 'babel-plugin-transform-rename-import'
+import plugin from 'babel-plugin-transform-remove-imports'
 import { transform } from 'babel-core'
  
 function replace (code) {
