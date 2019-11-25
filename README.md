@@ -19,7 +19,7 @@ Via `.babelrc` or `babel-loader`.
   "plugins": [
     [
       "babel-plugin-transform-remove-imports", {
-        "test": "(less|css)$"
+        "test": "\\.(less|css)$"
       }
     ]
   ]
@@ -47,12 +47,19 @@ import { Button } from 'uiw';
 import { Select } from '@uiw/core';
 ```
 
-## Optiosn
+## Options
 
-- `test: string` Matches based on regular expressions.
-- `removeAll: boolean` Delete all import packages.
+- `test: RegExp | string | (RegExp | string)[]`
+  
+  A regular expression to match the imports that will be removed.
+  It could be a string or a RegExp object.
+  You could also pass an array here.
 
-## Programatic Usage
+- `removeAll: boolean`
+
+  Deletes all imports.
+
+## Programmatic Usage
 
 ```js
 import plugin from 'babel-plugin-transform-remove-imports'
@@ -62,7 +69,7 @@ function replace (code) {
   return transform(code, {
     babelrc: false,
     plugins: [
-      [plugin, { test: "(less|css)$" }]
+      [plugin, { test: /\.(less|css)$/ }]
     ],
   }).code;
 }

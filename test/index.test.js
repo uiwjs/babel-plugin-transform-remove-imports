@@ -5,7 +5,7 @@ import plugin from '../src/index';
 
 const pluginBaseOpts = {
   "presets": [],
-}
+};
 
 const fixtureDir = join(__dirname, 'fixtures');
 const fixtures = readdirSync(fixtureDir);
@@ -25,12 +25,21 @@ fixtures.map((caseName) => {
       pluginBaseOpts.plugins = [
         [plugin, { removeAll: true }]
       ]
+    } else if (caseName === 'test-regexp-object') {
+      pluginBaseOpts.presets = [["@babel/preset-env", { "modules": false }]];
+      pluginBaseOpts.plugins = [
+        [plugin, { test: /^baz($|\/)/ }]
+      ]
+    } else if (caseName === 'test-array') {
+      pluginBaseOpts.presets = [["@babel/preset-env", { "modules": false }]];
+      pluginBaseOpts.plugins = [
+        [plugin, { test: [/^foo$/, /^bar$/, /^baz\//] }]
+      ]
     } else {
       pluginBaseOpts.presets = [["@babel/preset-env", { "modules": false }]];
     }
-
     const code = transformSync(readFileSync(inputFile), pluginBaseOpts).code;
     const expected = readFileSync(outputFile).toString();
     expect(code).toBe(expected);
   });
-})
+});
