@@ -17,9 +17,6 @@
     "uiw",
     "ssr"
   ],
-  "peerDependencies": {
-    "@babel/core": "^7.0.0-0"
-  },
   "jset": {
     "bail": true,
     "verbose": true,
@@ -28,17 +25,20 @@
       "**/?(*.)+(spec|test).js?(x)"
     ]
   },
+  "peerDependencies": {
+    "@babel/core": "^7.0.0-0"
+  },
   "dependencies": {},
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.2.2",
-    "@babel/plugin-proposal-class-properties": "^7.2.3",
-    "@babel/plugin-proposal-do-expressions": "^7.2.0",
-    "@babel/plugin-proposal-export-default-from": "^7.2.0",
-    "@babel/preset-env": "^7.2.3",
-    "@babel/preset-react": "^7.0.0",
+    "@babel/cli": "^7.7.4",
+    "@babel/core": "^7.7.4",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/plugin-proposal-do-expressions": "^7.7.4",
+    "@babel/plugin-proposal-export-default-from": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "@babel/preset-react": "^7.7.4",
     "babel-core": "^7.0.0-bridge.0",
-    "jest": "^24.8.0"
+    "jest": "^24.9.0"
   },
   "files": [
     "lib",
