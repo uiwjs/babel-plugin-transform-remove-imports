@@ -25,6 +25,16 @@ fixtures.map((caseName) => {
       pluginBaseOpts.plugins = [
         [plugin, { removeAll: true }]
       ]
+    } else if (caseName === 'options-empty') {
+      pluginBaseOpts.presets = [["@babel/preset-env", { "modules": false }]];
+      pluginBaseOpts.plugins = [
+        [plugin, { }]
+      ]
+    } else if (caseName === 'options-empty') {
+      pluginBaseOpts.presets = [["@babel/preset-env", { "modules": false }]];
+      pluginBaseOpts.plugins = [
+        [plugin, { }]
+      ]
     } else if (caseName === 'test-regexp-object') {
       pluginBaseOpts.presets = [["@babel/preset-env", { "modules": false }]];
       pluginBaseOpts.plugins = [
