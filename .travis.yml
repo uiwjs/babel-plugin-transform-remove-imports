@@ -1,5 +1,11 @@
 language: node_js
 node_js:
   - 10
+before_script:
+  - npm install codecov.io coveralls
 after_success:
-  - npm run test
+  - cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js
+  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+script:
+  - npm run build
+  - node --harmony ./node_modules/.bin/jest --coverage
