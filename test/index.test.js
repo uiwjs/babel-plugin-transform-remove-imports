@@ -30,10 +30,10 @@ fixtures.map((caseName) => {
       pluginBaseOpts.plugins = [
         [plugin, { }]
       ]
-    } else if (caseName === 'options-empty') {
+    } else if (caseName === 'import-undefined') {
       pluginBaseOpts.presets = [["@babel/preset-env", { "modules": false }]];
       pluginBaseOpts.plugins = [
-        [plugin, { }]
+        [plugin, { test: /.*/ }]
       ]
     } else if (caseName === 'test-regexp-object') {
       pluginBaseOpts.presets = [["@babel/preset-env", { "modules": false }]];
