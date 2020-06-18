@@ -30,15 +30,15 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@babel/cli": "^7.7.5",
-    "@babel/core": "^7.7.5",
-    "@babel/plugin-proposal-class-properties": "^7.7.4",
-    "@babel/plugin-proposal-do-expressions": "^7.7.4",
-    "@babel/plugin-proposal-export-default-from": "^7.7.4",
-    "@babel/preset-env": "^7.7.5",
-    "@babel/preset-react": "^7.7.4",
-    "babel-core": "^7.0.0-bridge.0",
-    "jest": "^24.9.0"
+    "@babel/cli": "7.10.1",
+    "@babel/core": "7.10.2",
+    "@babel/plugin-proposal-class-properties": "7.10.1",
+    "@babel/plugin-proposal-do-expressions": "7.10.1",
+    "@babel/plugin-proposal-export-default-from": "7.10.1",
+    "@babel/preset-env": "7.10.2",
+    "@babel/preset-react": "7.10.1",
+    "babel-core": "7.0.0-bridge.0",
+    "jest": "24.9.0"
   },
   "files": [
     "lib",
