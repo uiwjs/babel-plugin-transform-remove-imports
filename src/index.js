@@ -8,7 +8,14 @@ export default function () {
 
         const { node } = path;
         const { source } = node;
-        const { opts } = state;
+        const { opts = {} } = state;
+
+        // https://github.com/uiwjs/babel-plugin-transform-remove-imports/issues/3
+        if (opts.remove === 'effects') {
+          if (node.specifiers && node.specifiers.length === 0) {
+            path.remove();
+          }
+        }
 
         if (opts.removeAll) {
           path.remove();

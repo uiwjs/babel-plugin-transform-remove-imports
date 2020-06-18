@@ -52,13 +52,26 @@ import { Select } from '@uiw/core';
 
 - `test: RegExp | string | (RegExp | string)[]`
   
-  A regular expression to match the imports that will be removed.
-  It could be a string or a RegExp object.
-  You could also pass an array here.
+A regular expression to match the imports that will be removed.
+It could be a string or a RegExp object.
+You could also pass an array here.
 
 - `removeAll: boolean`
 
-  Deletes all imports.
+Deletes all imports.
+
+- `remove?: 'effects'`
+
+Removing only side effects imports
+
+```js
+// Input Code
+import 'foo';
+import Foo from 'foo';
+
+// Output Code  ↓ ↓ ↓ ↓ ↓ ↓
+import Foo from 'foo';
+```
 
 ## Programmatic Usage
 

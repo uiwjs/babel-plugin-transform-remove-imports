@@ -25,6 +25,11 @@ fixtures.map((caseName) => {
       pluginBaseOpts.plugins = [
         [plugin, { removeAll: true }]
       ]
+    } else if (caseName === 'remove-effects-import') {
+      pluginBaseOpts.presets = [["@babel/preset-env", { "modules": false }]];
+      pluginBaseOpts.plugins = [
+        [plugin, { remove: 'effects' }]
+      ]
     } else if (caseName === 'options-empty') {
       pluginBaseOpts.presets = [["@babel/preset-env", { "modules": false }]];
       pluginBaseOpts.plugins = [
@@ -48,6 +53,7 @@ fixtures.map((caseName) => {
     } else {
       pluginBaseOpts.presets = [["@babel/preset-env", { "modules": false }]];
     }
+
     const code = transformSync(readFileSync(inputFile), pluginBaseOpts).code;
     const expected = readFileSync(outputFile).toString();
     expect(code).toBe(expected);
