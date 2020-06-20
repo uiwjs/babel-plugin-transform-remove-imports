@@ -28,7 +28,7 @@ fixtures.map((caseName) => {
     } else if (caseName === 'remove-effects-import') {
       pluginBaseOpts.presets = [["@babel/preset-env", { "modules": false }]];
       pluginBaseOpts.plugins = [
-        [plugin, { remove: 'effects' }]
+        [plugin, { remove: 'effects', test: /^uiw/ }]
       ]
     } else if (caseName === 'options-empty') {
       pluginBaseOpts.presets = [["@babel/preset-env", { "modules": false }]];

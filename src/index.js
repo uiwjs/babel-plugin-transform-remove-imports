@@ -10,13 +10,6 @@ export default function () {
         const { source } = node;
         const { opts = {} } = state;
 
-        // https://github.com/uiwjs/babel-plugin-transform-remove-imports/issues/3
-        if (opts.remove === 'effects') {
-          if (node.specifiers && node.specifiers.length === 0) {
-            path.remove();
-          }
-        }
-
         if (opts.removeAll) {
           path.remove();
           return;
@@ -29,7 +22,17 @@ export default function () {
 
         /** @var {string} importName */
         const importName = (source && source.value ? source.value : undefined);
-        if (importName && testMatches(importName, opts.test)) {
+        const isMatch = testMatches(importName, opts.test);
+
+        // https://github.com/uiwjs/babel-plugin-transform-remove-imports/issues/3
+        if (opts.remove === 'effects') {
+          if (node.specifiers && node.specifiers.length === 0 && importName && isMatch) {
+            path.remove();
+          }
+          return;
+        }
+
+        if (importName && isMatch) {
           path.remove();
         }
 
@@ -44,6 +47,7 @@ export default function () {
  *
  * @param {string} importName
  * @param {RegExp|RegExp[]|string|string[]} test
+ * @returns {Boolean}
  */
 function testMatches(importName, test) {
 
@@ -55,7 +59,7 @@ function testMatches(importName, test) {
     if (typeof regex === "string") {
       regex = new RegExp(regex);
     }
-    return regex.test(importName);
+    return regex.test(importName || '');
   });
 
 }
