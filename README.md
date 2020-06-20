@@ -62,7 +62,7 @@ Deletes all imports.
 
 - `remove?: 'effects'`
 
-Removing only side effects imports
+Removing only side effects imports，Used with the `test` option. [#3](https://github.com/uiwjs/babel-plugin-transform-remove-imports/issues/3)
 
 ```js
 // Input Code
