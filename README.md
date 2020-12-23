@@ -94,4 +94,4 @@ replace("import './index.main.less';import { Button } from 'uiw';")
 
 ## License
 
-MIT © [`Kenny Wong`](https://github.com/jaywcjlove)
+[MIT](./LICENSE) © [`Kenny Wong`](https://github.com/jaywcjlove) & [`Slava Fomin II`](https://github.com/slavafomin)
