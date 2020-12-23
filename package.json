@@ -45,5 +45,8 @@
     "index.d.ts"
   ],
   "author": "Kenny Wong",
+  "contributors": [
+    "Slava Fomin II <slava@fomin.io>"
+  ],
   "license": "MIT"
 }
