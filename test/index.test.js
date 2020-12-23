@@ -1,61 +1,72 @@
-import { transformSync } from "@babel/core";
+
+import { transformSync } from '@babel/core';
 import { join } from 'path';
-import { readFileSync, readdirSync } from 'fs';
+import { readFileSync, readdirSync, writeFileSync, existsSync } from 'fs';
+
 import plugin from '../src/index';
 
-const pluginBaseOpts = {
-  "presets": [],
+
+const defaultBabelOptions = {
+  presets: [
+    ['@babel/preset-env', { modules: false }],
+  ],
+  plugins: [],
 };
 
-const fixtureDir = join(__dirname, 'fixtures');
-const fixtures = readdirSync(fixtureDir);
+const fixtureDir = join(__dirname, 'new-fixtures');
 
-fixtures.map((caseName) => {
+const dirEntries = readdirSync(fixtureDir, {
+  withFileTypes: true,
+});
+
+for (const dirEntry of dirEntries) {
+
+  if (!dirEntry.isDirectory()) {
+    continue;
+  }
+
+  const caseName = dirEntry.name;
+
+  const optionsFilePath = join(fixtureDir, caseName, 'options.js');
   const inputFile = join(fixtureDir, caseName, 'input.js');
-  const outputFile = join(fixtureDir, caseName, 'output.js');
-  test(`should work with ${caseName.split('-').join(' ')}`, () => {
-    const type = caseName.split('-')[0];
-    if (type === 'cjs') {
-      pluginBaseOpts.presets = ["@babel/preset-env"];
-      pluginBaseOpts.plugins = [
-        [plugin, { test: "(less|css)$" }]
-      ]
-    } else if (caseName === 'remove-all') {
-      pluginBaseOpts.presets = [["@babel/preset-env", { "modules": false }]];
-      pluginBaseOpts.plugins = [
-        [plugin, { removeAll: true }]
-      ]
-    } else if (caseName === 'remove-effects-import') {
-      pluginBaseOpts.presets = [["@babel/preset-env", { "modules": false }]];
-      pluginBaseOpts.plugins = [
-        [plugin, { remove: 'effects', test: /^uiw/ }]
-      ]
-    } else if (caseName === 'options-empty') {
-      pluginBaseOpts.presets = [["@babel/preset-env", { "modules": false }]];
-      pluginBaseOpts.plugins = [
-        [plugin, { }]
-      ]
-    } else if (caseName === 'import-undefined') {
-      pluginBaseOpts.presets = [["@babel/preset-env", { "modules": false }]];
-      pluginBaseOpts.plugins = [
-        [plugin, { test: /.*/ }]
-      ]
-    } else if (caseName === 'test-regexp-object') {
-      pluginBaseOpts.presets = [["@babel/preset-env", { "modules": false }]];
-      pluginBaseOpts.plugins = [
-        [plugin, { test: /^baz($|\/)/ }]
-      ]
-    } else if (caseName === 'test-array') {
-      pluginBaseOpts.presets = [["@babel/preset-env", { "modules": false }]];
-      pluginBaseOpts.plugins = [
-        [plugin, { test: [/^foo$/, /^bar$/, /^baz\//] }]
-      ]
-    } else {
-      pluginBaseOpts.presets = [["@babel/preset-env", { "modules": false }]];
+  const expectedOutputFile = join(fixtureDir, caseName, 'output.js');
+  const resultFile = join(fixtureDir, caseName, 'result.js');
+
+  test(`Case '${caseName}' should work correctly`, () => {
+
+    const babelOptions = {
+      ...defaultBabelOptions,
+    };
+
+    // Loading case-specific options
+    if (existsSync(optionsFilePath)) {
+
+      const caseOptionsModule = require(optionsFilePath);
+      const caseOptions = (caseOptionsModule.default || caseOptionsModule);
+
+      Object.assign(babelOptions, caseOptions.babelOptions || {});
+
+      babelOptions.plugins = [
+        ...babelOptions.plugins,
+        [plugin, (caseOptions.pluginOptions || {})]
+      ];
+
     }
 
-    const code = transformSync(readFileSync(inputFile), pluginBaseOpts).code;
-    const expected = readFileSync(outputFile).toString();
-    expect(code).toBe(expected);
+    const source = readFileSync(inputFile, {
+      encoding: 'utf-8',
+    });
+
+    const { code } = transformSync(source, babelOptions);
+
+    writeFileSync(resultFile, code);
+
+    const expectedCode = readFileSync(expectedOutputFile, {
+      encoding: 'utf-8',
+    });
+
+    expect(code).toBe(expectedCode);
+
   });
-});
+
+}
