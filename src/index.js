@@ -1,8 +1,42 @@
 
 export default function () {
   return {
-    name: "transform-remove-imports",
+    name: 'transform-remove-imports',
     visitor: {
+
+      // https://babeljs.io/docs/en/babel-types#callexpression
+      CallExpression(path, state) {
+
+        const { node } = path;
+
+        if (node.arguments.length !== 1) {
+          return;
+        }
+
+        const argument = node.arguments[0];
+        const moduleId = argument.value;
+
+        const options = (state.opts || {});
+
+        if (!testMatches(moduleId, options.test)) {
+          return;
+        }
+
+        const parentType = path.parentPath.node.type;
+
+        // In remove effects mode we should delete only requires that are
+        // simple expression statements
+        if (
+          options.remove === 'effects' &&
+          parentType !== 'ExpressionStatement'
+        ) {
+          return;
+        }
+
+        path.remove();
+
+      },
+
       // https://babeljs.io/docs/en/babel-types#importdeclaration
       ImportDeclaration(path, state) {
 
@@ -16,7 +50,7 @@ export default function () {
         }
 
         if (!opts.test) {
-          console.warn("transform-remove-imports: \"test\" option should be specified");
+          console.warn('transform-remove-imports: "test" option should be specified');
           return;
         }
 
@@ -56,7 +90,7 @@ function testMatches(importName, test) {
 
   // Finding out if at least one test matches
   return tests.some(regex => {
-    if (typeof regex === "string") {
+    if (typeof regex === 'string') {
       regex = new RegExp(regex);
     }
     return regex.test(importName || '');
