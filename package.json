@@ -17,12 +17,14 @@
     "uiw",
     "ssr"
   ],
-  "jset": {
+  "jest": {
     "bail": true,
     "verbose": true,
+    "coveragePathIgnorePatterns": [
+      "/test/new-fixtures"
+    ],
     "testMatch": [
-      "**/__tests__/**/*.js?(x)",
-      "**/?(*.)+(spec|test).js?(x)"
+      "**/*.(spec|test).js?(x)"
     ]
   },
   "peerDependencies": {
