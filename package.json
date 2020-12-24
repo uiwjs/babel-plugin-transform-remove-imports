@@ -3,6 +3,7 @@
   "version": "1.5.0",
   "description": "Remove the specified import declaration when you use the babel transform to build the package.",
   "repository": "https://github.com/uiwjs/babel-plugin-transform-remove-imports",
+  "typings": "./index.d.ts",
   "main": "lib/index.js",
   "scripts": {
     "prepare": "npm run build && npm run test",
