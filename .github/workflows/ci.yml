@@ -1,4 +1,4 @@
-name: Build and Test babel-plugin-transform-remove-imports
+name: Build and Test
 on:
   push:
     branches:
