@@ -2,6 +2,7 @@ babel-plugin-transform-remove-imports
 ===
 
 [![NPM version](https://img.shields.io/npm/v/babel-plugin-transform-remove-imports.svg?style=flat)](https://npmjs.org/package/babel-plugin-transform-remove-imports)
+[![Build and Test](https://github.com/uiwjs/babel-plugin-transform-remove-imports/workflows/Build%20and%20Test%20babel-plugin-transform-remove-imports/badge.svg)](https://github.com/uiwjs/babel-plugin-transform-remove-imports/actions)
 [![Build Status](https://img.shields.io/travis/uiwjs/babel-plugin-transform-remove-imports.svg?style=flat)](https://travis-ci.org/uiwjs/babel-plugin-transform-remove-imports)
 [![Coverage Status](https://coveralls.io/repos/github/uiwjs/babel-plugin-transform-remove-imports/badge.svg?branch=master)](https://coveralls.io/github/uiwjs/babel-plugin-transform-remove-imports?branch=master)
 
@@ -46,6 +47,42 @@ Output Result
 - import './index.main.less';
 import { Button } from 'uiw';
 import { Select } from '@uiw/core';
+```
+
+#### support `require`
+
+Via `.babelrc` or `babel-loader`.
+
+```json
+{
+  "plugins": [
+    [
+      "babel-plugin-transform-remove-imports", {
+        "test": "@babel/core",
+      }
+    ]
+  ]
+}
+```
+
+```js
+// Input Code
+const core = require('@babel/core');
+useCore(require('@babel/core'));
+require('@babel/core');
+require('jest');
+
+// Output   ↓ ↓ ↓ ↓ ↓ ↓
+require('jest');
+```
+
+Output Result
+
+```diff
+- const core = require('@babel/core');
+- useCore(require('@babel/core'));
+- require('@babel/core');
+require('jest');
 ```
 
 ## Options
