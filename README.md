@@ -49,7 +49,7 @@ import { Button } from 'uiw';
 import { Select } from '@uiw/core';
 ```
 
-#### support `require`
+#### Support `require`
 
 Via `.babelrc` or `babel-loader`.
 
