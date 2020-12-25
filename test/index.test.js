@@ -13,9 +13,9 @@ const defaultBabelOptions = {
   plugins: [],
 };
 
-const fixtureDir = join(__dirname, 'new-fixtures');
+const casesPath = join(__dirname, 'cases');
 
-const dirEntries = readdirSync(fixtureDir, {
+const dirEntries = readdirSync(casesPath, {
   withFileTypes: true,
 });
 
@@ -27,10 +27,10 @@ for (const dirEntry of dirEntries) {
 
   const caseName = dirEntry.name;
 
-  const optionsFilePath = join(fixtureDir, caseName, 'options.js');
-  const inputFile = join(fixtureDir, caseName, 'input.js');
-  const expectedOutputFile = join(fixtureDir, caseName, 'output.js');
-  const resultFile = join(fixtureDir, caseName, 'result.js');
+  const optionsFilePath = join(casesPath, caseName, 'options.js');
+  const inputFilePath = join(casesPath, caseName, 'input.js');
+  const expectedOutputFilePath = join(casesPath, caseName, 'output.js');
+  const resultFilePath = join(casesPath, caseName, 'result.js');
 
   test(`Case '${caseName}' should work correctly`, () => {
 
@@ -53,15 +53,15 @@ for (const dirEntry of dirEntries) {
 
     }
 
-    const source = readFileSync(inputFile, {
+    const source = readFileSync(inputFilePath, {
       encoding: 'utf-8',
     });
 
     const { code } = transformSync(source, babelOptions);
 
-    writeFileSync(resultFile, code);
+    writeFileSync(resultFilePath, code);
 
-    const expectedCode = readFileSync(expectedOutputFile, {
+    const expectedCode = readFileSync(expectedOutputFilePath, {
       encoding: 'utf-8',
     });
 
