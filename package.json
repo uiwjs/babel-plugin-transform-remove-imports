@@ -22,7 +22,7 @@
     "bail": true,
     "verbose": true,
     "coveragePathIgnorePatterns": [
-      "/test/new-fixtures"
+      "/test/cases"
     ],
     "testMatch": [
       "**/*.(spec|test).js?(x)"
