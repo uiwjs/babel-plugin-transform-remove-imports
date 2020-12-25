@@ -9,6 +9,10 @@ export default function () {
 
         const { node } = path;
 
+        if (node.callee.name !== 'require') {
+          return;
+        }
+
         if (node.arguments.length !== 1) {
           return;
         }
