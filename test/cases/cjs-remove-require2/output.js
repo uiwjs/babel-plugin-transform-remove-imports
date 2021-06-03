@@ -1,0 +1,1 @@
+var jest = require('jest');

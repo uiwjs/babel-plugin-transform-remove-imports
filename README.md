@@ -67,22 +67,19 @@ Via `.babelrc` or `babel-loader`.
 
 ```js
 // Input Code
-const core = require('@babel/core');
-useCore(require('@babel/core'));
 require('@babel/core');
-require('jest');
+const jest = require('jest');
 
 // Output   ↓ ↓ ↓ ↓ ↓ ↓
-require('jest');
+var jest = require('jest');
 ```
 
 Output Result
 
 ```diff
-- const core = require('@babel/core');
-- useCore(require('@babel/core'));
 - require('@babel/core');
-require('jest');
+- const jest = require('jest');
++ var jest = require('jest');
 ```
 
 ## Options

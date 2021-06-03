@@ -13,16 +13,12 @@ export default function () {
           return;
         }
 
-        if (node.arguments.length !== 1) {
-          return;
-        }
-
         const argument = node.arguments[0];
         const moduleId = argument.value;
 
-        const options = (state.opts || {});
+        const options = state.opts;
 
-        if (!testMatches(moduleId, options.test)) {
+        if (options.test && !testMatches(moduleId, options.test)) {
           return;
         }
 
@@ -46,7 +42,7 @@ export default function () {
 
         const { node } = path;
         const { source } = node;
-        const { opts = {} } = state;
+        const { opts } = state;
 
         if (opts.removeAll) {
           path.remove();
