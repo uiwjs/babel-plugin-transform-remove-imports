@@ -3,7 +3,6 @@ babel-plugin-transform-remove-imports
 
 [![NPM version](https://img.shields.io/npm/v/babel-plugin-transform-remove-imports.svg?style=flat)](https://npmjs.org/package/babel-plugin-transform-remove-imports)
 [![Build and Test](https://github.com/uiwjs/babel-plugin-transform-remove-imports/workflows/Build%20and%20Test/badge.svg)](https://github.com/uiwjs/babel-plugin-transform-remove-imports/actions)
-[![Build Status](https://img.shields.io/travis/uiwjs/babel-plugin-transform-remove-imports.svg?style=flat)](https://travis-ci.org/uiwjs/babel-plugin-transform-remove-imports)
 [![Coverage Status](https://coveralls.io/repos/github/uiwjs/babel-plugin-transform-remove-imports/badge.svg?branch=master)](https://coveralls.io/github/uiwjs/babel-plugin-transform-remove-imports?branch=master)
 
 Modular import plugin for babel for server-side rendering. Also works for cjs to delete imported CSS to avoid compilation errors..
