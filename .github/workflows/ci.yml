@@ -41,11 +41,13 @@ jobs:
         tag: ${{ steps.create_tag.outputs.version }}
         body: |
           [![](https://img.shields.io/badge/Open%20in-unpkg-blue)](https://uiwjs.github.io/npm-unpkg/#/pkg/babel-plugin-transform-remove-imports@${{steps.create_tag.outputs.versionNumber}}/file/README.md) [![](https://img.shields.io/github/issues/uiwjs/babel-plugin-transform-remove-imports.svg)](https://github.com/uiwjs/babel-plugin-transform-remove-imports/releases) [![](https://img.shields.io/github/forks/uiwjs/babel-plugin-transform-remove-imports.svg)](https://github.com/uiwjs/babel-plugin-transform-remove-imports/network) [![](https://img.shields.io/github/stars/uiwjs/babel-plugin-transform-remove-imports.svg)](https://github.com/uiwjs/babel-plugin-transform-remove-imports/stargazers) [![](https://img.shields.io/github/release/uiwjs/babel-plugin-transform-remove-imports.svg)](https://github.com/uiwjs/babel-plugin-transform-remove-imports/releases) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/babel-plugin-transform-remove-imports)](https://bundlephobia.com/result?p=babel-plugin-transform-remove-imports@${{steps.create_tag.outputs.versionNumber}})
+          
           ```bash
-          npm i install babel-plugin-transform-remove-imports@${{steps.create_tag.outputs.versionNumber}}
+          npm i babel-plugin-transform-remove-imports@${{steps.create_tag.outputs.versionNumber}}
           ```
 
           ${{ steps.changelog.outputs.compareurl }}
+
           ${{ steps.changelog.outputs.changelog }}
 
     - name: Coveralls
