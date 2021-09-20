@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1632104195847" clover="3.2.0">
-  <project timestamp="1632104195847" name="All files">
+<coverage generated="1632104235210" clover="3.2.0">
+  <project timestamp="1632104235211" name="All files">
     <metrics statements="35" coveredstatements="35" conditionals="36" coveredconditionals="36" methods="5" coveredmethods="5" elements="76" coveredelements="76" complexity="0" loc="35" ncloc="35" packages="1" files="1" classes="1"/>
     <file name="index.js" path="/home/runner/work/babel-plugin-transform-remove-imports/babel-plugin-transform-remove-imports/src/index.js">
       <metrics statements="35" coveredstatements="35" conditionals="36" coveredconditionals="36" methods="5" coveredmethods="5"/>
