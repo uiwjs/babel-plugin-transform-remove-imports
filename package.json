@@ -21,6 +21,10 @@
   "jest": {
     "bail": true,
     "verbose": true,
+    "coverageReporters": [
+      "lcov",
+      "json-summary"
+    ],
     "coveragePathIgnorePatterns": [
       "/test/cases"
     ],
