@@ -15,7 +15,9 @@ jobs:
     - run: npm install
     - run: npm run build
     - run: npm run test
-    - run: npm i coverage-badges-cli -g
+
+    - run: npm i markdown-to-html-cli coverage-badges-cli  -g
+    - run: markdown-to-html-cli --output coverage/index.html
     - run: coverage-badges
 
     - name: Deploy
@@ -26,18 +28,18 @@ jobs:
 
     - name: Create Tag
       id: create_tag
-      uses: jaywcjlove/create-tag-action@v1.1.10
+      uses: jaywcjlove/create-tag-action@v1.2.1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         package-path: ./package.json
 
     - name: Generate Changelog
       id: changelog
-      uses: jaywcjlove/changelog-generator@v1.3.10
+      uses: jaywcjlove/changelog-generator@v1.4.6
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         head-ref: ${{steps.create_tag.outputs.version}}
-        filter-author: (jaywcjlove|小弟调调™|dependabot\[bot\]|Renovate Bot)
+        filter-author: (小弟调调™|Renovate Bot)
         filter: '[R|r]elease[d]\s+[v|V]\d(\.\d+){0,2}'
 
     - name: Create Release
