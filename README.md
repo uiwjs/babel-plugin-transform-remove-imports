@@ -1,5 +1,6 @@
 babel-plugin-transform-remove-imports
 ===
+<!--rehype:style=display: flex; height: 230px; align-items: center; justify-content: center; font-size: 38px;-->
 
 [![NPM version](https://img.shields.io/npm/v/babel-plugin-transform-remove-imports.svg?style=flat)](https://npmjs.org/package/babel-plugin-transform-remove-imports)
 [![Build and Test](https://github.com/uiwjs/babel-plugin-transform-remove-imports/workflows/Build%20and%20Test/badge.svg)](https://github.com/uiwjs/babel-plugin-transform-remove-imports/actions)
