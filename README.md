@@ -127,6 +127,16 @@ replace("import './index.main.less';import { Button } from 'uiw';")
 //=> "import { Button } from 'uiw';"
 ```
 
+## Contributors
+
+As always, thanks to our amazing contributors!
+
+<a href="https://github.com/uiwjs/babel-plugin-transform-remove-imports/graphs/contributors">
+  <img src="https://uiwjs.github.io/babel-plugin-transform-remove-imports/CONTRIBUTORS.svg" />
+</a>
+
+Made with [github-action-contributors](https://github.com/jaywcjlove/github-action-contributors).
+
 ## License
 
 [MIT](./LICENSE) © [`Kenny Wong`](https://github.com/jaywcjlove) & [`Slava Fomin II`](https://github.com/slavafomin)
