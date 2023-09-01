@@ -26,8 +26,9 @@ jobs:
         EOF
 
     - run: npm install idoc@1.26.6 -g
+    - run: idoc
 
-    - run: npm i markdown-to-html-cli coverage-badges-cli -g
+    - run: npm i coverage-badges-cli -g
     - run: coverage-badges --output dist/badges.svg
 
     - name: Generate Contributors Images
