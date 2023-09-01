@@ -1,47 +1,59 @@
-name: Build and Test
+name: CI
 on:
   push:
     branches:
       - master
 jobs:
   build-deploy:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
       with:
-        node-version: 14
+        node-version: 16
+        registry-url: 'https://registry.npmjs.org'
 
     - run: npm install
     - run: npm run build
     - run: npm run test
 
+    - name: Create idoc config
+      run: |
+        cat > idoc.yml << EOF
+        site: "babel-plugin-transform-remove-imports {{version}}"
+        menus:
+          Home: index.html
+        EOF
+
+    - run: npm install idoc@1.26.6 -g
+
     - run: npm i markdown-to-html-cli coverage-badges-cli -g
-    - run: markdown-to-html-cli --output coverage/index.html
-    - run: coverage-badges
+    - run: coverage-badges --output dist/badges.svg
 
     - name: Generate Contributors Images
       uses: jaywcjlove/github-action-contributors@main
       with:
         filter-author: (renovate\[bot\]|renovate-bot|dependabot\[bot\])
-        output: coverage/CONTRIBUTORS.svg
+        output: dist/CONTRIBUTORS.svg
         avatarSize: 42
+
+    - run: cp -rp coverage/lcov-report dist
 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./coverage
+        publish_dir: ./dist
 
     - name: Create Tag
       id: create_tag
-      uses: jaywcjlove/create-tag-action@v1.3.5
+      uses: jaywcjlove/create-tag-action@main
       with:
         package-path: ./package.json
 
     - name: Generate Changelog
       id: changelog
-      uses: jaywcjlove/changelog-generator@v1.4.8
+      uses: jaywcjlove/changelog-generator@main
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         head-ref: ${{steps.create_tag.outputs.version}}
@@ -66,5 +78,8 @@ jobs:
 
           ${{ steps.changelog.outputs.changelog }}
 
-    - run: npm install @jsdevtools/npm-publish -g
-    - run: npm-publish --token="${{ secrets.NPM_TOKEN }}" ./package.json
+    - run: npm publish --access public
+      continue-on-error: true
+      working-directory: core
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
