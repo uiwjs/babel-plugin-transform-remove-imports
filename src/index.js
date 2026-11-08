@@ -1,5 +1,5 @@
 
-export default function () {
+export default function ({ types: t }) {
   return {
     name: 'transform-remove-imports',
     visitor: {
@@ -33,7 +33,7 @@ export default function () {
           return;
         }
 
-        path.remove();
+        removeRequire(path, t);
 
       },
 
@@ -75,6 +75,96 @@ export default function () {
   };
 }
 
+
+/**
+ * Removes a matched `require()` without leaving a syntax error behind.
+ * Bindings that cannot exist without an initializer are removed. A call in
+ * any other expression position is replaced with `undefined`.
+ *
+ * @param {import('@babel/traverse').NodePath} path
+ * @param {import('@babel/types')} t
+ */
+function removeRequire(path, t) {
+
+  const parent = path.parentPath;
+
+  if (parent.isExpressionStatement()) {
+    parent.remove();
+    return;
+  }
+
+  if (isRemovableListEntry(path)) {
+    path.remove();
+    return;
+  }
+
+  if (parent.isVariableDeclarator() && parent.node.init === path.node) {
+    removeRequireBinding(parent);
+    return;
+  }
+
+  path.replaceWith(t.identifier('undefined'));
+
+}
+
+/**
+ * Argument lists and array elements can shrink and still parse.
+ * `require("x")()` is the callee, not an argument, so it is not handled here.
+ *
+ * @param {import('@babel/traverse').NodePath} path
+ * @returns {Boolean}
+ */
+function isRemovableListEntry(path) {
+
+  const parent = path.parentPath;
+
+  if (path.listKey === 'arguments') {
+    return parent.isCallExpression() || parent.isNewExpression();
+  }
+
+  return path.listKey === 'elements' && parent.isArrayExpression();
+
+}
+
+/**
+ * @param {import('@babel/traverse').NodePath} declaratorPath
+ */
+function removeRequireBinding(declaratorPath) {
+
+  const declarationPath = declaratorPath.parentPath;
+  const id = declaratorPath.node.id;
+  const kind = declarationPath.isVariableDeclaration()
+    ? declarationPath.node.kind
+    : null;
+
+  // `const`, `using`, and destructuring patterns are syntax errors without an
+  // initializer. A `var` or `let` identifier can stay uninitialized.
+  const needsInitializer = kind === 'const'
+    || kind === 'using'
+    || kind === 'await using'
+    || id.type !== 'Identifier';
+
+  if (!needsInitializer) {
+    declaratorPath.get('init').remove();
+    return;
+  }
+
+  declaratorPath.remove();
+
+  // Babel itself drops a declaration that lost its only declarator, and an
+  // `export` wrapped around that declaration. Cover the case where it did not.
+  if (!declarationPath.node || declarationPath.node.declarations.length > 0) {
+    return;
+  }
+
+  if (declarationPath.parentPath.isExportNamedDeclaration()) {
+    declarationPath.parentPath.remove();
+    return;
+  }
+
+  declarationPath.remove();
+
+}
 
 /**
  * Determines if the import matches the specified tests.

@@ -1,5 +1,5 @@
 
-import { transformSync } from '@babel/core';
+import { parseSync, transformSync } from '@babel/core';
 import { join } from 'path';
 import { readFileSync, readdirSync, writeFileSync, existsSync } from 'fs';
 
@@ -39,6 +39,8 @@ for (const dirEntry of dirEntries) {
     };
 
     // Loading case-specific options
+    let assertParses = false;
+
     if (existsSync(optionsFilePath)) {
 
       const caseOptionsModule = require(optionsFilePath);
@@ -50,6 +52,8 @@ for (const dirEntry of dirEntries) {
         ...babelOptions.plugins,
         [plugin, (caseOptions.pluginOptions || {})]
       ];
+
+      assertParses = Boolean(caseOptions.assertParses);
 
     }
 
@@ -66,6 +70,14 @@ for (const dirEntry of dirEntries) {
     });
 
     expect(code).toBe(expectedCode);
+
+    if (assertParses) {
+      expect(() => parseSync(code, {
+        sourceType: 'unambiguous',
+        configFile: false,
+        babelrc: false,
+      })).not.toThrow();
+    }
 
   });
 
